@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 2,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     paddingBottom: 20,
   },
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     elevation: 2,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     overflow: 'hidden',
   },
@@ -147,8 +147,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   draggableList: {
-    width:300,
+    width: 300,
   },
+  infoBox: {
+    width: 10
+  }
 })
 
-export {styles}
+export { styles }

@@ -1,23 +1,24 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
-import {createAppContainer, createSwitchNavigator} from 'react-navigation'
-import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import {
   createStackNavigator,
   HeaderTitle,
   TransitionSpecs,
   HeaderStyleInterpolators,
 } from 'react-navigation-stack'
-import {Root, Icon} from 'native-base'
-import {Alert, Text, TouchableOpacity, View, StyleSheet} from 'react-native'
-import {Colors} from './components/Colors'
+import { Root, Icon } from 'native-base'
+import { Alert, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Colors } from './components/Colors'
 import Splash from './components/Spalsh'
-import {styles} from './assets/MyStyles'
-import {reviewScreen} from './components/review/Review'
-import {DayDetail} from './components/review/DayDetails'
+import { styles } from './assets/MyStyles'
+import { reviewScreen } from './components/review/Review'
+import { DayDetail } from './components/review/DayDetails'
 import Login from './components/Login'
-import {requestScreen} from './components/request/Request'
-import {MyRequestTab} from './components/request/Tab'
+import { requestScreen } from './components/request/Request'
+import { MyRequestTab } from './components/request/Tab'
+import { RequestDayDetail } from './components/request/RequestDayDetails';
 const MyTransitionToDown = {
   gestureDirection: 'vertical',
   transitionSpec: {
@@ -25,7 +26,7 @@ const MyTransitionToDown = {
     close: TransitionSpecs.TransitionIOSSpec,
   },
   headerStyleInterpolator: HeaderStyleInterpolators.forFade,
-  cardStyleInterpolator: ({current, next, layouts}) => {
+  cardStyleInterpolator: ({ current, next, layouts }) => {
     return {
       cardStyle: {
         transform: [
@@ -54,7 +55,7 @@ const MyTransitionToLeft = {
   },
   headerStyleInterpolator: HeaderStyleInterpolators.forFade,
 
-  cardStyleInterpolator: ({current, next, layouts}) => {
+  cardStyleInterpolator: ({ current, next, layouts }) => {
     return {
       cardStyle: {
         transform: [
@@ -82,7 +83,7 @@ const screen2 = () => {
     </View>
   )
 }
-const profile =  () => {
+const profile = () => {
   let [logined, setLogined] = useState(false)
   // useEffect(() => {
   //   console.log('profile');
@@ -110,7 +111,7 @@ const MyTilte = navigation => {
     // }
   }, [pName])
   return (
-    <Text style={{fontSize: 10, fontFamily: 'IRANSansMobile_Bold'}}>
+    <Text style={{ fontSize: 10, fontFamily: 'IRANSansMobile_Bold' }}>
       {pName}
     </Text>
   )
@@ -119,7 +120,7 @@ const ShiftRequestStack = createStackNavigator(
   {
     request: {
       screen: MyRequestTab,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         headerShown: true,
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
@@ -128,19 +129,41 @@ const ShiftRequestStack = createStackNavigator(
         // headerTitle: navigation.state.params.personnelName,
         ...MyTransitionToLeft,
         headerRight: () => (
-          <View style={{flexDirection: 'row', marginRight: 2}}>
+          <View style={{ flexDirection: 'row', marginRight: 2 }}>
             <TouchableOpacity
               onPress={() => console.log(navigation.state.params)}>
               <Icon
                 name='add-outline'
                 type='Ionicons'
-                style={{color: 'black', fontSize: 30}}
+                style={{ color: 'black', fontSize: 30 }}
               />
             </TouchableOpacity>
           </View>
         ),
       }),
     },
+    requestDayDetail: {
+      screen: RequestDayDetail,
+      navigationOptions: ({ navigation }) => ({
+        headerShown: true,
+        headerTitleStyle: {
+          fontFamily: 'IRANSansMobile_Bold',
+        },
+        headerTitle: '',
+        ...MyTransitionToLeft,
+        headerRight: () => (
+          <View style={{ flexDirection: 'row', marginRight: 2 }}>
+            <TouchableOpacity onPress={() => console.log('dsd')}>
+              <Icon
+                name='add-outline'
+                type='Ionicons'
+                style={{ color: 'black', fontSize: 30 }}
+              />
+            </TouchableOpacity>
+          </View>
+        ),
+      }),
+    }
   },
   {
     initialRouteName: 'request',
@@ -150,7 +173,7 @@ const ShiftReviewStack = createStackNavigator(
   {
     review: {
       screen: reviewScreen,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         headerShown: true,
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
@@ -159,13 +182,13 @@ const ShiftReviewStack = createStackNavigator(
         // headerTitle: navigation.state.params.personnelName,
         ...MyTransitionToLeft,
         headerRight: () => (
-          <View style={{flexDirection: 'row', marginRight: 2}}>
+          <View style={{ flexDirection: 'row', marginRight: 2 }}>
             <TouchableOpacity
               onPress={() => console.log(navigation.state.params)}>
               <Icon
                 name='add-outline'
                 type='Ionicons'
-                style={{color: 'black', fontSize: 30}}
+                style={{ color: 'black', fontSize: 30 }}
               />
             </TouchableOpacity>
           </View>
@@ -174,7 +197,7 @@ const ShiftReviewStack = createStackNavigator(
     },
     dayDetail: {
       screen: DayDetail,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         headerShown: true,
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
@@ -182,12 +205,12 @@ const ShiftReviewStack = createStackNavigator(
         headerTitle: '',
         ...MyTransitionToLeft,
         headerRight: () => (
-          <View style={{flexDirection: 'row', marginRight: 2}}>
+          <View style={{ flexDirection: 'row', marginRight: 2 }}>
             <TouchableOpacity onPress={() => console.log('dsd')}>
               <Icon
                 name='add-outline'
                 type='Ionicons'
-                style={{color: 'black', fontSize: 30}}
+                style={{ color: 'black', fontSize: 30 }}
               />
             </TouchableOpacity>
           </View>
@@ -206,7 +229,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
   {
     shiftRequestStack: {
       screen: ShiftRequestStack,
-      navigationOptions: ({navigation}) => ({
+      navigationOptions: ({ navigation }) => ({
         tabBarLabel: (
           <Text
             style={{
@@ -217,11 +240,11 @@ const TabNavigator = createMaterialBottomTabNavigator(
             درخواست ها
           </Text>
         ),
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <View>
             <Icon
               color={tintColor}
-              style={{fontSize: 18}}
+              style={{ fontSize: 18 }}
               name={'chrome-reader-mode'}
               type={'MaterialIcons'}
             />
@@ -229,7 +252,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
         activeColor: 'black',
         inactiveColor: 'red',
-        barStyle: {backgroundColor: Colors.background},
+        barStyle: { backgroundColor: Colors.background },
       }),
     },
     shiftReviewStack: {
@@ -245,17 +268,17 @@ const TabNavigator = createMaterialBottomTabNavigator(
             شیف من
           </Text>
         ),
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <Icon
             color={tintColor}
-            style={{fontSize: 18}}
+            style={{ fontSize: 18 }}
             name={'book-reader'}
             type={'FontAwesome5'}
           />
         ),
         activeColor: 'black',
         inactiveColor: 'red',
-        barStyle: {backgroundColor: Colors.background},
+        barStyle: { backgroundColor: Colors.background },
       },
     },
     profileStack: {
@@ -271,11 +294,11 @@ const TabNavigator = createMaterialBottomTabNavigator(
             پروفایل
           </Text>
         ),
-        tabBarIcon: ({tintColor}) => (
+        tabBarIcon: ({ tintColor }) => (
           <View>
             <Icon
               color={tintColor}
-              style={{fontSize: 18}}
+              style={{ fontSize: 18 }}
               type='FontAwesome5'
               name='user'
             />
@@ -283,7 +306,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
         activeColor: 'black',
         inactiveColor: 'red',
-        barStyle: {backgroundColor: Colors.background},
+        barStyle: { backgroundColor: Colors.background },
       },
     },
   },
@@ -291,7 +314,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
     initialRouteName: 'shiftReviewStack',
     activeColor: 'black',
     inactiveColor: 'red',
-    barStyle: {backgroundColor: 'blue'},
+    barStyle: { backgroundColor: 'blue' },
   },
 )
 const RootNavigator = createSwitchNavigator(

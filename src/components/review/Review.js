@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { NavigationEvents } from 'react-navigation'
 import {styles} from '../../assets/MyStyles'
 import {shift_colors} from '../Colors'
+import { shift_type } from '../Consts'
 
 const reviewScreen = ({navigation}) => {
   let [data, setData] = useState([])

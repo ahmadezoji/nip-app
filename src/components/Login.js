@@ -131,7 +131,7 @@ export default class Login extends React.Component {
         password: pass,
       }),
     }
-s
+
     fetch('http://10.2.9.132:81/api/account/login', requestOptions)
       .then(response => response.json())
       .then(result =>{
