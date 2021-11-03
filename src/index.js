@@ -19,6 +19,7 @@ import Login from './components/Login'
 import { requestScreen } from './components/request/Request'
 import { MyRequestTab } from './components/request/Tab'
 import { RequestDayDetail } from './components/request/RequestDayDetails';
+import { userDetail} from './components/user/userDetail'
 const MyTransitionToDown = {
   gestureDirection: 'vertical',
   transitionSpec: {
@@ -144,6 +145,28 @@ const ShiftRequestStack = createStackNavigator(
     },
     requestDayDetail: {
       screen: RequestDayDetail,
+      navigationOptions: ({ navigation }) => ({
+        headerShown: true,
+        headerTitleStyle: {
+          fontFamily: 'IRANSansMobile_Bold',
+        },
+        headerTitle: '',
+        ...MyTransitionToLeft,
+        headerRight: () => (
+          <View style={{ flexDirection: 'row', marginRight: 2 }}>
+            <TouchableOpacity onPress={() => console.log('dsd')}>
+              <Icon
+                name='add-outline'
+                type='Ionicons'
+                style={{ color: 'black', fontSize: 30 }}
+              />
+            </TouchableOpacity>
+          </View>
+        ),
+      }),
+    },
+    userDetail: {
+      screen: userDetail,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
         headerTitleStyle: {

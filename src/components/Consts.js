@@ -6,6 +6,7 @@ export const Colors ={
     icons : '#8C0303',
 };
 export const shift_type = {
+    0:'off',
     1:"صبح",
     2:"عصر",
     3:"شب",
@@ -13,6 +14,13 @@ export const shift_type = {
     23:"عصر تا شب",
 }
 export const shift_value={
-    '1':"ندارد",
-    '-1':"دارد"
+    '1':"می خواهد ",
+    '-1':"نمی خواهد",
+    '0':"بدون رای"
+}
+
+export const shift_colors={
+    '0': '#e4f4f1',
+    '-1': '#00CD00',
+    '1': '#FF0000',
 }

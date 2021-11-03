@@ -17,29 +17,24 @@ import { shift_type } from '../Consts'
 
 const reviewScreen = ({navigation}) => {
   let [data, setData] = useState([])
-  let [workSection, setWorkSection] = useState(0)
-  let [period, setPeriod] = useState('140005')
-  let [personnel, setPersonnel] = useState({})
   let [refreshing, setRefreshing] = useState(false)
   const _onRefresh = async () => {
     try {
       
       let response = await fetch(
-        `http://10.2.9.132:81/api/psd/?limit=100&p_id=33581&YearWorkingPeriod=${period}`,
+        `http://10.2.9.132:81/api/shifts-personnel-details/?p_id=33581&yw_id=2020&nooff=0`,
       )
       let result = await response.json()
-      setWorkSection(result.results[0].Personnel.WorkSection.id)
-      setPersonnel(result.results[0].Personnel)
-      let array = []
-      Object.keys(result.results[0]).forEach(key => {
-        if (key.includes('D')) {
-          let val = result.results[0][key]
-          array = [...array, val]
-        }
-      })
+      // let array = []
+      // Object.keys(result.results[0]).forEach(key => {
+      //   if (key.includes('D')) {
+      //     let val = result.results[0][key]
+      //     array = [...array, val]
+      //   }
+      // })
       // await navigation.setParams({personnelName:result.results[0].Personnel.FullName})
       
-      setData(array)
+      setData(result.results)
       // setRefreshing(true)
     } catch (error) {
       console.log(error)
@@ -72,23 +67,21 @@ const reviewScreen = ({navigation}) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('dayDetail', {
-                selectedDay: `${index + 1}`,
-                selectedWorkSection: workSection,
-                personnel: personnel,
+                selectedDay: parseInt(item.DayNo),
               })
             }
             style={[
               styles.reviewCardStyle,
-              {opacity: item.Title === 'off' ? 0.5 : 1},
+              {opacity: item.Shift.Title === 'off' ? 0.5 : 1},
             ]}>
-            {/* <Text style={{color: 'white', fontFamily: 'IRANSansMobile'}}>
-              {item.Code}
+            <Text style={{color: 'color', fontFamily: 'IRANSansMobile'}}>
+              روز {item.DayNo}
             </Text>
-            <Text style={{color: 'white', fontFamily: 'IRANSansMobile_Bold'}}>
+             {/*<Text style={{color: 'white', fontFamily: 'IRANSansMobile_Bold'}}>
               {item.Type}
             </Text> */}
             <Text style={{color: 'black', fontFamily: 'IRANSansMobile_Bold'}}>
-              {item.Title}
+              {item.Date}
             </Text>
           </TouchableOpacity>
         )}

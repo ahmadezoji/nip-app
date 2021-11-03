@@ -21,10 +21,8 @@ const DayDetail = ({navigation}) => {
   let [selectedDay, setSelectedDay] = useState(
     navigation.state.params.selectedDay,
   )
-  let [worksection, setWorksection] = useState(
-    navigation.state.params.selectedWorkSection,
-  )
-  let [yw_id, setYwId] = useState('140005')
+  let [worksection, setWorksection] = useState('2020')
+  let [yw_id, setYwId] = useState('2022')
   let [refreshing, setRefreshing] = useState(false)
   const getArray = type => {
     if (type == '1') return [true, false, false]
@@ -39,7 +37,7 @@ const DayDetail = ({navigation}) => {
     
     try {
       let response = await fetch(
-        `http://10.2.9.132:81/api/shifts_day_details/?yw_id=${yw_id}&worksection=${worksection}&day=${selectedDay}`,
+        `http://10.2.9.132:81/api/shifts-day-details/?worksection=45234&yw_id=2020&day=${selectedDay}`,
       )
       let result = await response.json()
       setUserDetail(result.results)

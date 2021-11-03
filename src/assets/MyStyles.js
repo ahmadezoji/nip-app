@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native'
+import {Dimensions, StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
+    width: Dimensions.get('window').width,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 2,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     paddingBottom: 20,
   },
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     elevation: 2,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     overflow: 'hidden',
   },
@@ -150,8 +152,23 @@ const styles = StyleSheet.create({
     width: 300,
   },
   infoBox: {
-    width: 10
-  }
+    width: 10,
+  },
+  acceptbtn: {
+    width: 70,
+    height: 40,
+    margin: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    backgroundColor: '#A01F',
+  },
+  btnTxt: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
+    fontFamily: 'IRANSansMobile',
+  },
 })
 
-export { styles }
+export {styles}
