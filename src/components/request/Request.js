@@ -158,7 +158,7 @@ const RequestScreen = ({navigation}) => {
     }
   }
   useEffect(() => {
-    _onRefresh()
+   !refreshing && _onRefresh()
     // console.log(dayReq.length)
     // console.log(dayReq)
     // return () => setRefreshing(true)
@@ -231,7 +231,7 @@ const RequestScreen = ({navigation}) => {
           height: '10%',
           margin: 3,
         }}>
-        <TouchableOpacity style={styles.acceptbtn} disabled={true} onPress={() => save()}>
+        <TouchableOpacity style={styles.acceptbtn} onPress={() => save()}>
           <Text style={styles.btnTxt}>ثبت</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.acceptbtn}>
@@ -258,6 +258,7 @@ const RenderRequestDay = params => {
     else return 0
   }
   useEffect(() => {
+    console.log('effect');
     Object.keys(params.dayReq).forEach(key => {
       if (params.dayReq[key].Day == params.item.Day) {
         if (params.dayReq[key].ShiftTypeCode == 1)
@@ -305,6 +306,7 @@ const RenderRequestDay = params => {
         }}>
         <Text
           style={{
+            fontSize:12,
             color: params.item.SpecialDay == 1 ? 'red' : 'black',
             fontFamily: 'IRANSansMobile',
           }}>
@@ -312,6 +314,7 @@ const RenderRequestDay = params => {
         </Text>
         <Text
           style={{
+            fontSize:10,
             color: params.item.SpecialDay == 1 ? 'red' : 'black',
             fontFamily: 'IRANSansMobile',
           }}>

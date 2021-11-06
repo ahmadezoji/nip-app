@@ -17,6 +17,10 @@ import { shift_type } from '../Consts'
 
 const reviewScreen = ({navigation}) => {
   let [data, setData] = useState([])
+  let [personnel,setPersonnel] = useState({
+    id:33581,
+    FullName : 'سمیه کلبادی'
+  })
   let [refreshing, setRefreshing] = useState(false)
   const _onRefresh = async () => {
     try {
@@ -68,6 +72,7 @@ const reviewScreen = ({navigation}) => {
             onPress={() =>
               navigation.navigate('dayDetail', {
                 selectedDay: parseInt(item.DayNo),
+                Personnel : personnel
               })
             }
             style={[

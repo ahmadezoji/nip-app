@@ -179,7 +179,7 @@ const DayDetail = ({navigation}) => {
                   verticalAlign: 'center',
                   fontWeight:
                     data.item.Personnel.id ==
-                    navigation.state.params.personnel.id
+                    navigation.state.params.Personnel.id
                       ? 'bold'
                       : '400',
                 }}>
