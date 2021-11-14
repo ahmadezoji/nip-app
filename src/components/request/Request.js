@@ -19,6 +19,7 @@ import {Icon, Spinner} from 'native-base'
 import Popover from 'react-native-popover-view'
 import {shift_type, shift_value} from '../Consts'
 import {PersonnelIcon} from '../user/userDetail'
+import Toast from 'react-native-simple-toast'
 const BtnColorStatus = {
   0: '#e4f4f1',
   1: '#00CD00',
@@ -181,6 +182,7 @@ const RequestScreen = ({navigation}) => {
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error))
+
   }
   //{backgroundColor:shift_colors[item.Title]}
   if (!load) {
@@ -258,7 +260,6 @@ const RenderRequestDay = params => {
     else return 0
   }
   useEffect(() => {
-    console.log('effect');
     Object.keys(params.dayReq).forEach(key => {
       if (params.dayReq[key].Day == params.item.Day) {
         if (params.dayReq[key].ShiftTypeCode == 1)
@@ -269,7 +270,7 @@ const RenderRequestDay = params => {
           setChooseN(shift_selector(params.dayReq[key].Value))
       }
     })
-  })
+  },[])
   const [showPopoverM, setShowPopoverM] = useState(false)
   const [showPopoverA, setShowPopoverA] = useState(false)
   const [showPopoverN, setShowPopoverN] = useState(false)

@@ -20,6 +20,8 @@ import { requestScreen } from './components/request/Request'
 import { MyRequestTab } from './components/request/Tab'
 import { RequestDayDetail } from './components/request/RequestDayDetails';
 import { userDetail} from './components/user/userDetail'
+
+
 const MyTransitionToDown = {
   gestureDirection: 'vertical',
   transitionSpec: {
@@ -327,8 +329,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
             />
           </View>
         ),
-        activeColor: 'black',
-        inactiveColor: 'red',
+        activeColor: 'red',
+        inactiveColor: 'black',
         barStyle: { backgroundColor: Colors.background },
       },
     },

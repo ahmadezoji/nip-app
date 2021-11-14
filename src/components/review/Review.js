@@ -25,29 +25,22 @@ const reviewScreen = ({navigation}) => {
   const _onRefresh = async () => {
     try {
       
+      setRefreshing(false)
+      
       let response = await fetch(
         `http://10.2.9.132:81/api/shifts-personnel-details/?p_id=33581&yw_id=2020&nooff=0`,
       )
       let result = await response.json()
-      // let array = []
-      // Object.keys(result.results[0]).forEach(key => {
-      //   if (key.includes('D')) {
-      //     let val = result.results[0][key]
-      //     array = [...array, val]
-      //   }
-      // })
-      // await navigation.setParams({personnelName:result.results[0].Personnel.FullName})
-      
+  
       setData(result.results)
-      // setRefreshing(true)
+      setRefreshing(true)
     } catch (error) {
       console.log(error)
     }
   }
   useEffect(() => {
     !refreshing &&  _onRefresh()
-    return () => setRefreshing(true)
-  })
+  },[])
   //{backgroundColor:shift_colors[item.Title]}
   return (
     <LinearGradient
@@ -62,7 +55,7 @@ const reviewScreen = ({navigation}) => {
         style={{flex: 1}}
         virtical
         showsVerticalScrollIndicator={false}
-        // onRefresh={() => _onRefresh()}
+        onRefresh={() => _onRefresh()}
         refreshing={refreshing}
         numColumns={3}
         pagingEnabled={true}
