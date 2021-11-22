@@ -1,5 +1,5 @@
-import {CommonActions} from '@react-navigation/native'
-import React, {useState, useRef, useEffect} from 'react'
+import { CommonActions } from '@react-navigation/native'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Alert,
   Text,
@@ -12,13 +12,13 @@ import {
   Image,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import {NavigationEvents} from 'react-navigation'
-import {styles} from '../../assets/MyStyles'
-import {shift_colors} from '../Colors'
-import {Icon, Spinner} from 'native-base'
+import { NavigationEvents } from 'react-navigation'
+import { styles } from '../../assets/MyStyles'
+import { shift_colors } from '../Colors'
+import { Icon, Spinner } from 'native-base'
 import Popover from 'react-native-popover-view'
-import {shift_type, shift_value} from '../Consts'
-import {PersonnelIcon} from '../user/userDetail'
+import { shift_type, shift_value } from '../Consts'
+import { PersonnelIcon } from '../user/userDetail'
 import Toast from 'react-native-simple-toast'
 const BtnColorStatus = {
   0: '#e4f4f1',
@@ -71,14 +71,14 @@ const ShiftDetail_popoup = params => {
         flexDirection: 'column',
       }}>
       <FlatList
-        style={{margin: 5}}
+        style={{ margin: 5 }}
         virtical
         showsVerticalScrollIndicator={false}
         // onRefresh={() => _onRefresh()}
         refreshing={refreshing}
         pagingEnabled={true}
         data={dayDetail}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <View
             style={{
               flex: 1,
@@ -115,12 +115,12 @@ const ShiftDetail_popoup = params => {
         keyExtractor={(item, index) => {
           return item.id
         }}
-        ListFooterComponent={<View style={{height: 100}} />}
+        ListFooterComponent={<View style={{ height: 100 }} />}
       />
     </View>
   )
 }
-const RequestScreen = ({navigation}) => {
+const RequestScreen = ({ navigation }) => {
   let [data, setData] = useState([])
   let [dayList, setDayList] = useState([])
   let [dayReq, setDayReq] = useState([])
@@ -128,7 +128,7 @@ const RequestScreen = ({navigation}) => {
   let [period, setPeriod] = useState('140005')
   let [personnel, setPersonnel] = useState({
     name: 'سمیه کلبادی',
-    pid: '36108',
+    pid: '33581',
   })
   let [refreshing, setRefreshing] = useState(false)
   let [popupVisible, setPopupVisible] = useState(false)
@@ -139,13 +139,13 @@ const RequestScreen = ({navigation}) => {
     try {
       setRefreshing(false)
       let responseRequsted = await fetch(
-        `http://10.2.9.132:81/api/self-declaration-get/?personnel_id=36108&yw_id=2022`,
+        `http://10.2.9.132:81/api/self-declaration-get/?personnel_id=36108&yw_id=2020`,
       )
       let resultRequested = await responseRequsted.json()
       setDayReq(resultRequested.results)
 
       let response = await fetch(
-        `http://10.2.9.132:81/api/self-declaration-initial/?personnel_id=${personnel.pid}`,
+        `http://10.2.9.132:81/api/self-declaration-initial/?personnel_id=42783`,
       )
 
       let result = await response.json()
@@ -159,9 +159,7 @@ const RequestScreen = ({navigation}) => {
     }
   }
   useEffect(() => {
-   !refreshing && _onRefresh()
-    // console.log(dayReq.length)
-    // console.log(dayReq)
+    !refreshing && _onRefresh()
     // return () => setRefreshing(true)
   })
   const save = () => {
@@ -187,14 +185,16 @@ const RequestScreen = ({navigation}) => {
   //{backgroundColor:shift_colors[item.Title]}
   if (!load) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <LinearGradient
+        colors={['#12c2e9', '#c471ed', '#f64f59']}
+        style={styles.linearGradient}>
         <Spinner color='black' />
-      </View>
+      </LinearGradient>
     )
   }
   return (
     <LinearGradient
-      colors={['#e4f4f1', '#e4f4f1', '#e4f4f1']}
+      colors={['#12c2e9', '#c471ed', '#f64f59']}
       style={styles.linearGradient}>
       <StatusBar
         translucent
@@ -202,14 +202,14 @@ const RequestScreen = ({navigation}) => {
         barStyle='dark-content'
       />
       <FlatList
-        style={{flex: 1, width: '100%', height: '88%'}}
+        style={{ flex: 1, width: '100%', height: '88%' }}
         virtical
         showsVerticalScrollIndicator={false}
         // onRefresh={() => _onRefresh()}
         // refreshing={refreshing}
         pagingEnabled={true}
         data={dayList}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <RenderRequestDay
             index={index}
             item={item}
@@ -224,7 +224,7 @@ const RequestScreen = ({navigation}) => {
         keyExtractor={(item, index) => {
           return item.id
         }}
-        ListFooterComponent={<View style={{height: 20}} />}
+        ListFooterComponent={<View style={{ height: 20 }} />}
       />
       <View
         style={{
@@ -270,7 +270,7 @@ const RenderRequestDay = params => {
           setChooseN(shift_selector(params.dayReq[key].Value))
       }
     })
-  },[])
+  }, [])
   const [showPopoverM, setShowPopoverM] = useState(false)
   const [showPopoverA, setShowPopoverA] = useState(false)
   const [showPopoverN, setShowPopoverN] = useState(false)
@@ -307,7 +307,7 @@ const RenderRequestDay = params => {
         }}>
         <Text
           style={{
-            fontSize:12,
+            fontSize: 12,
             color: params.item.SpecialDay == 1 ? 'red' : 'black',
             fontFamily: 'IRANSansMobile',
           }}>
@@ -315,7 +315,7 @@ const RenderRequestDay = params => {
         </Text>
         <Text
           style={{
-            fontSize:10,
+            fontSize: 10,
             color: params.item.SpecialDay == 1 ? 'red' : 'black',
             fontFamily: 'IRANSansMobile',
           }}>
@@ -324,7 +324,7 @@ const RenderRequestDay = params => {
       </View>
 
       <Popover
-        popoverStyle={{borderRadius: 20}}
+        popoverStyle={{ borderRadius: 20 }}
         isVisible={showPopoverM}
         onRequestClose={() => setShowPopoverM(false)}
         from={
@@ -430,4 +430,4 @@ const RenderRequestDay = params => {
     </View>
   )
 }
-export {RequestScreen}
+export { RequestScreen }

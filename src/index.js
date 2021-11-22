@@ -125,6 +125,7 @@ const ShiftRequestStack = createStackNavigator(
       screen: MyRequestTab,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
+        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -149,6 +150,7 @@ const ShiftRequestStack = createStackNavigator(
       screen: RequestDayDetail,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
+        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -200,6 +202,7 @@ const ShiftReviewStack = createStackNavigator(
       screen: reviewScreen,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
+        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -224,6 +227,7 @@ const ShiftReviewStack = createStackNavigator(
       screen: DayDetail,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
+        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -260,6 +264,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             style={{
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
+              fontWeight:'bold',
               fontSize: 12,
             }}>
             درخواست ها
@@ -275,8 +280,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
             />
           </View>
         ),
-        activeColor: 'black',
-        inactiveColor: 'red',
+        activeColor: 'white',
+        inactiveColor: 'black',
         barStyle: { backgroundColor: Colors.background },
       }),
     },
@@ -289,6 +294,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
               fontSize: 12,
+              fontWeight:'bold',
             }}>
             شیف من
           </Text>
@@ -301,8 +307,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
             type={'FontAwesome5'}
           />
         ),
-        activeColor: 'black',
-        inactiveColor: 'red',
+        activeColor: 'white',
+        inactiveColor: 'black',
         barStyle: { backgroundColor: Colors.background },
       },
     },
@@ -315,6 +321,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
               fontSize: 12,
+              fontWeight:'bold',
             }}>
             پروفایل
           </Text>
@@ -329,7 +336,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             />
           </View>
         ),
-        activeColor: 'red',
+        activeColor: 'white',
         inactiveColor: 'black',
         barStyle: { backgroundColor: Colors.background },
       },
@@ -337,9 +344,6 @@ const TabNavigator = createMaterialBottomTabNavigator(
   },
   {
     initialRouteName: 'shiftReviewStack',
-    activeColor: 'black',
-    inactiveColor: 'red',
-    barStyle: { backgroundColor: 'blue' },
   },
 )
 const RootNavigator = createSwitchNavigator(

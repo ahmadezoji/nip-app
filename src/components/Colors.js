@@ -11,6 +11,6 @@ export const shift_colors ={
 }
 
 export const Colors ={
-    background : '#0000',
+    background : '#f64f59',
     icons : '#8C0303',
 };

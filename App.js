@@ -16,6 +16,7 @@ import {
   Button,
   Text
 } from 'react-native';
+
 // import { connect } from 'react-redux';
 // import { changeCount } from './src/components/actions/counts';
 // import { bindActionCreators } from 'redux';
