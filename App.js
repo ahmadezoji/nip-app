@@ -14,8 +14,11 @@ import {
   StyleSheet,
   View,
   Button,
-  Text
+  Text,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { USER_DETAIL } from './src/components/Consts';
+import { getUserInfo } from './src/components/Login';
 
 // import { connect } from 'react-redux';
 // import { changeCount } from './src/components/actions/counts';
@@ -24,10 +27,10 @@ import {
 
 // class App extends Component {
 //   componentDidMount(){
-    
+
 //   }
 //   decrementCount() {
-    
+
 //     let { count, actions } = this.props;
 //     count.count--;
 //     actions.actions.changeCount(count.count);
@@ -77,10 +80,22 @@ import {
 
 // export default connect(mapStateToProps, mapDispatchToProps)(App)
 export default class App extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
-  render () {
+  async componentDidMount() {
+    try {
+      console.log('START');
+      let json = await AsyncStorage.getItem(USER_DETAIL)
+      getUserInfo(JSON.parse(json).user_id, result => {
+        // console.log(result);
+      })
+
+    } catch (error) {
+      // Error saving data
+    }
+  }
+  render() {
     return <Main />
   }
 }

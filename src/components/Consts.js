@@ -1,6 +1,10 @@
 import React from 'react';
 
 
+export const USER_DETAIL = "user_id";
+export const USER_ID = "user_id";
+export const USER_WS_ID = "user_workSection_id";
+export const USER_WP_ID = "user_workPeriod_id";
 export const Colors = {
     background: '#0000',
     icons: '#8C0303',

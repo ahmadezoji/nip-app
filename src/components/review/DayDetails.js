@@ -1,5 +1,5 @@
-import {Icon} from 'native-base'
-import React, {useState, useEffect} from 'react'
+import { Icon } from 'native-base'
+import React, { useState, useEffect } from 'react'
 import {
   Alert,
   Text,
@@ -11,18 +11,18 @@ import {
   StatusBar,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import {styles} from '../../assets/MyStyles'
-import {shift_colors} from '../Colors'
+import { styles } from '../../assets/MyStyles'
+import { shift_colors } from '../Colors'
+import { PersonnelIcon } from '../user/Profile'
 
-const DayDetail = ({navigation}) => {
-  // let [data, setData] = useState([])
+
+const DayDetail = ({ navigation }) => {
   let [userDetail, setUserDetail] = useState([])
-  let [m_users, setM_users] = useState([])
   let [selectedDay, setSelectedDay] = useState(
     navigation.state.params.selectedDay,
   )
-  let [worksection, setWorksection] = useState('2020')
-  let [yw_id, setYwId] = useState('2022')
+  let [worksection, setWorksection] = useState(navigation.state.params.Personnel.ywp_id)
+  let [yw_id, setYwId] = useState(navigation.state.params.Personnel.ws_id)
   let [refreshing, setRefreshing] = useState(false)
   const getArray = type => {
     if (type == '1') return [true, false, false]
@@ -34,10 +34,10 @@ const DayDetail = ({navigation}) => {
   }
   const _onRefresh = async () => {
     // setRefreshing(true)
-    
+
     try {
       let response = await fetch(
-        `http://10.2.9.132:81/api/shifts-day-details/?worksection=45234&yw_id=2020&day=${selectedDay}`,
+        `http://10.2.9.132:81/api/shifts-day-details/?worksection=${worksection}&yw_id=${yw_id}&day=${selectedDay}`,
       )
       let result = await response.json()
       setUserDetail(result.results)
@@ -93,25 +93,29 @@ const DayDetail = ({navigation}) => {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-          margin: 1,
         }}>
         <View
           style={{
             flex: 1,
             width: '25%',
             height: 60,
-            borderColor: 'black',
-            borderWidth: 1,
+            borderRightColor: 'blue',
+            borderRightWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           {mShiftType[0] && (
             <View
               style={{
-                backgroundColor: 'black',
+                backgroundColor: '#d5ec0c',
+                borderRadius: 4,
                 width: '100%',
                 height: 20,
-              }}></View>
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>18:00 - 24:00</Text>
+            </View>
           )}
         </View>
         <View
@@ -119,18 +123,23 @@ const DayDetail = ({navigation}) => {
             flex: 1,
             width: '25%',
             height: 60,
-            borderColor: 'black',
-            borderWidth: 1,
+            borderRightColor: 'blue',
+            borderRightWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           {mShiftType[1] && (
             <View
               style={{
-                backgroundColor: 'black',
+                backgroundColor: '#d5ec0c',
                 width: '100%',
+                borderRadius: 4,
                 height: 20,
-              }}></View>
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>12:00 - 18:00</Text>
+            </View>
           )}
         </View>
         <View
@@ -138,54 +147,36 @@ const DayDetail = ({navigation}) => {
             flex: 1,
             width: '25%',
             height: 60,
-            borderColor: 'black',
-            borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           {mShiftType[2] && (
             <View
               style={{
-                backgroundColor: 'black',
+                backgroundColor: '#d5ec0c',
                 width: '100%',
+                borderRadius: 4,
                 height: 20,
-              }}></View>
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text style={{ fontSize: 10, color: 'red' }}>8:00 - 12:00</Text>
+            </View>
           )}
         </View>
         <View
           style={{
             width: '25%',
-            borderColor: 'red',
+            borderColor: 'transparent',
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           {data.item.Personnel.FullName && (
-            <View
-              style={{
-                backgroundColor: '#Aff',
-                height: 70,
-                width: 70,
-                borderRadius: 35,
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-              }}>
-              <Icon name='user-female' type='SimpleLineIcons' />
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 12,
-                  textAlign: 'center',
-                  verticalAlign: 'center',
-                  fontWeight:
-                    data.item.Personnel.id ==
-                    navigation.state.params.Personnel.id
-                      ? 'bold'
-                      : '400',
-                }}>
-                {data.item.Personnel.FullName}
-              </Text>
-            </View>
+            <PersonnelIcon
+              personnel={data.item.Personnel}
+              onRequestClose={() => params}
+            />
           )}
         </View>
       </View>
@@ -193,7 +184,10 @@ const DayDetail = ({navigation}) => {
   }
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white', flexDirection: 'column'}}>
+    // <View style={{flex: 1, backgroundColor: '#12c2e9', flexDirection: 'column'}}>
+    <LinearGradient
+      colors={['#12c2e9', '#c471ed', '#f64f59']}
+      style={styles.survaylinearGradient}>
       <StatusBar
         translucent
         backgroundColor='transparent'
@@ -203,30 +197,26 @@ const DayDetail = ({navigation}) => {
         style={{
           flexDirection: 'row',
           height: 100,
-          borderColor: 'red',
-          borderWidth: 1,
         }}>
         {shift.map(item => {
           return (
             <View
               style={{
                 flex: 1,
-                borderColor: 'black',
-                borderWidth: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
               <View
                 style={{
-                  backgroundColor: '#Aff',
-                  height: 60,
+                  height: 40,
                   width: 60,
-                  borderRadius: 30,
+                  borderRadius:5,
+                  backgroundColor:'#f64f59',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={{fontSize: 25, fontWeight: 'bold', color: 'black'}}>
+                  style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
                   {item.name}
                 </Text>
               </View>
@@ -237,32 +227,25 @@ const DayDetail = ({navigation}) => {
           style={{
             flex: 1,
             height: '100%',
-            borderColor: 'black',
-            borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
           }}></View>
       </View>
-      {/* <ScrollView
-        contentContainerStyle={{flexGrow: 1}}
-        showsVerticalScrollIndicator={false}>
-        {userDetail.map(datum => {
-          return renderRow(datum)
-        })}
-      </ScrollView> */}
       <FlatList
-        // style={{flex: 1,borderColor: 'black',borderWidth: 1}}
+      style={{width:'100%'}}
         vertical
         showsVerticalScrollIndicator={false}
         refreshing={refreshing}
         data={userDetail}
         renderItem={renderRow}
-        ListFooterComponent={<View style={{paddingRight: 60}} />}
+        ListFooterComponent={<View style={{ paddingRight: 60 }} />}
       />
-    </View>
+    </LinearGradient>
+    // </View>
+
   )
 }
-const RenderM = ({params}) => {
+const RenderM = ({ params }) => {
   let [users, setUsers] = useState([])
   let [refreshing, setRefreshing] = useState(false)
   useEffect(() => {
@@ -271,13 +254,13 @@ const RenderM = ({params}) => {
   return (
     <View>
       <FlatList
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         horizontal
         showHorizontal={false}
         refreshing={refreshing}
         pagingEnabled={true}
         data={users}
-        renderItem={({item, index}) => (
+        renderItem={({ item, index }) => (
           <TouchableOpacity style={styles.DayDetailRowCardStyle}>
             <Text style={styles.userName}>{item.Personnel.FullName}</Text>
           </TouchableOpacity>
@@ -285,9 +268,9 @@ const RenderM = ({params}) => {
         keyExtractor={(item, index) => {
           return item.id
         }}
-        ListFooterComponent={<View style={{paddingRight: 60}} />}
+        ListFooterComponent={<View style={{ paddingRight: 60 }} />}
       />
     </View>
   )
 }
-export {DayDetail}
+export { DayDetail }

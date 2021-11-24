@@ -18,15 +18,14 @@ import LinearGradient from 'react-native-linear-gradient'
 import { NavigationEvents } from 'react-navigation'
 import { styles } from '../../assets/MyStyles'
 import { shift_colors } from '../Colors'
-import { shift_title } from '../Consts';
+import { shift_title, USER_DETAIL } from '../Consts';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const SurveyScreen = ({ navigation }) => {
   let [data, setData] = useState(null)
   let [workSection, setWorkSection] = useState(0)
   let [period, setPeriod] = useState('140005')
-  let [personnel, setPersonnel] = useState({
-    id: '42783',
-  })
+  let [personnel, setPersonnel] = useState({})
   let [refreshing, setRefreshing] = useState(false)
   let [dropdownList, setDropdownlList] = useState([])
   let [selectedRate, setSelectedRate] = useState();
@@ -45,10 +44,11 @@ const SurveyScreen = ({ navigation }) => {
     try {
 
       setRefreshing(false)
-
+      let json = await AsyncStorage.getItem(USER_DETAIL)
+      setPersonnel(JSON.parse(json))
 
       let response1 = await fetch(
-        `http://10.2.9.132:81/api/shifts-assignment/?p_id=${personnel.id}&yw_id=2027`,
+        `http://10.2.9.132:81/api/shifts-assignment/?p_id=${JSON.parse(json).p_id}&yw_id=2027`,
       )
       let result1 = await response1.json()
       setDropdownlList(result1.results);
@@ -67,7 +67,7 @@ const SurveyScreen = ({ navigation }) => {
     try {
       setData(null)
       let response = await fetch(
-        `http://10.2.9.132:81/api/shifts-assignment-details/?shiftassignment=${selectedRate}&personnel=${personnel.id}`,
+        `http://10.2.9.132:81/api/shifts-assignment-details/?shiftassignment=${selectedRate}&personnel=${personnel.p_id}`,
       )
       let result = await response.json()
 

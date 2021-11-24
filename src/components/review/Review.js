@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import { CommonActions } from '@react-navigation/native'
 import React, { useState, useEffect } from 'react'
 import {
@@ -13,22 +14,23 @@ import LinearGradient from 'react-native-linear-gradient'
 import { NavigationEvents } from 'react-navigation'
 import { styles } from '../../assets/MyStyles'
 import { shift_colors } from '../Colors'
-import { shift_title, shift_type } from '../Consts'
+import { shift_title, shift_type, USER_DETAIL } from '../Consts'
 
 const reviewScreen = ({ navigation }) => {
   let [data, setData] = useState([])
-  let [personnel, setPersonnel] = useState({
-    id: 33581,
-    FullName: 'سمیه کلبادی'
-  })
+  let [personnel, setPersonnel] = useState({})
   let [refreshing, setRefreshing] = useState(false)
   const _onRefresh = async () => {
     try {
 
       setRefreshing(false)
 
+      let json = await AsyncStorage.getItem(USER_DETAIL)
+
+      setPersonnel(JSON.parse(json))
+
       let response = await fetch(
-        `http://10.2.9.132:81/api/shifts-personnel-details/?p_id=33581&yw_id=2020&nooff=0`,
+        `http://10.2.9.132:81/api/shifts-personnel-details/?p_id=${JSON.parse(json).p_id}&yw_id=${JSON.parse(json).ywp_id}&nooff=0`,
       )
       let result = await response.json()
 

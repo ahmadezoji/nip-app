@@ -11,15 +11,17 @@ import {
   Dimensions,
   Image,
 } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 import { NavigationEvents } from 'react-navigation'
 import { styles } from '../../assets/MyStyles'
 import { shift_colors } from '../Colors'
 import { Icon, Spinner } from 'native-base'
 import Popover from 'react-native-popover-view'
-import { shift_type, shift_value } from '../Consts'
-import { PersonnelIcon } from '../user/userDetail'
+import { shift_type, shift_value, USER_DETAIL } from '../Consts'
 import Toast from 'react-native-simple-toast'
+import LinearGradient from 'react-native-linear-gradient'
+import { PersonnelIcon } from '../user/Profile'
+import AsyncStorage from '@react-native-community/async-storage'
+
 const BtnColorStatus = {
   0: '#e4f4f1',
   1: '#00CD00',
@@ -83,7 +85,7 @@ const ShiftDetail_popoup = params => {
             style={{
               flex: 1,
               flexDirection: 'row-reverse',
-              backgroundColor: 'white',
+              backgroundColor: 'trasparent',
               margin: 2,
               width: 250,
               height: 70,
@@ -121,15 +123,9 @@ const ShiftDetail_popoup = params => {
   )
 }
 const RequestScreen = ({ navigation }) => {
-  let [data, setData] = useState([])
   let [dayList, setDayList] = useState([])
   let [dayReq, setDayReq] = useState([])
-  let [workSection, setWorkSection] = useState(0)
-  let [period, setPeriod] = useState('140005')
-  let [personnel, setPersonnel] = useState({
-    name: 'سمیه کلبادی',
-    pid: '33581',
-  })
+  let [personnel, setPersonnel] = useState({})
   let [refreshing, setRefreshing] = useState(false)
   let [popupVisible, setPopupVisible] = useState(false)
   let [load, setLoad] = useState(false)
@@ -138,14 +134,18 @@ const RequestScreen = ({ navigation }) => {
   const _onRefresh = async () => {
     try {
       setRefreshing(false)
+
+      let json = await AsyncStorage.getItem(USER_DETAIL)
+      setPersonnel(JSON.parse(json))
+
       let responseRequsted = await fetch(
-        `http://10.2.9.132:81/api/self-declaration-get/?personnel_id=36108&yw_id=2020`,
+        `http://10.2.9.132:81/api/self-declaration-get/?personnel_id=${JSON.parse(json).p_id}&yw_id=${JSON.parse(json).ywp_id}`,
       )
       let resultRequested = await responseRequsted.json()
       setDayReq(resultRequested.results)
 
       let response = await fetch(
-        `http://10.2.9.132:81/api/self-declaration-initial/?personnel_id=42783`,
+        `http://10.2.9.132:81/api/self-declaration-initial/?personnel_id=${JSON.parse(json).p_id}`,
       )
 
       let result = await response.json()
@@ -161,7 +161,7 @@ const RequestScreen = ({ navigation }) => {
   useEffect(() => {
     !refreshing && _onRefresh()
     // return () => setRefreshing(true)
-  })
+  },[])
   const save = () => {
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
@@ -214,6 +214,7 @@ const RequestScreen = ({ navigation }) => {
             index={index}
             item={item}
             navigation={navigation}
+            personnel={personnel}
             dayReq={dayReq}
             onChnage={value => {
               setChangeListStatus(true)
@@ -317,6 +318,8 @@ const RenderRequestDay = params => {
           style={{
             fontSize: 10,
             color: params.item.SpecialDay == 1 ? 'red' : 'black',
+            textAlign:'center',
+            maxWidth:40,
             fontFamily: 'IRANSansMobile',
           }}>
           {params.item.PersianDate}
@@ -333,8 +336,8 @@ const RenderRequestDay = params => {
             onPress={() => {
               setChooseM(chooseM < 2 ? chooseM + 1 : 0)
               onRefreshRequestList({
-                Personnel: 36108,
-                YearWorkingPeriod: params.item.YearWorkingPeriod,
+                Personnel: params.personnel.p_id,
+                YearWorkingPeriod: params.personnel.ywp_id,
                 Day: params.item.Day,
                 ShiftTypeCode: 1,
                 Value: shiftToIndexColor(chooseM),
@@ -367,8 +370,8 @@ const RenderRequestDay = params => {
             onPress={() => {
               setChooseA(chooseA < 2 ? chooseA + 1 : 0)
               onRefreshRequestList({
-                Personnel: 36108,
-                YearWorkingPeriod: params.item.YearWorkingPeriod,
+                Personnel: params.personnel.p_id,
+                YearWorkingPeriod: params.personnel.ywp_id,
                 Day: params.item.Day,
                 ShiftTypeCode: 2,
                 Value: shiftToIndexColor(chooseA),
@@ -402,8 +405,8 @@ const RenderRequestDay = params => {
             onPress={() => {
               setChooseN(chooseN < 2 ? chooseN + 1 : 0)
               onRefreshRequestList({
-                Personnel: 36108,
-                YearWorkingPeriod: params.item.YearWorkingPeriod,
+                Personnel: params.personnel.p_id,
+                YearWorkingPeriod: params.personnel.ywp_id,
                 Day: params.item.Day,
                 ShiftTypeCode: 3,
                 Value: shiftToIndexColor(chooseN),

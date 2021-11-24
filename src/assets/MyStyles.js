@@ -35,6 +35,16 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 10,
   },
+  userDetaillinearGradient: {
+    flex:1,
+    flexDirection: 'column'
+  },
+  profileLinearGradient: {
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    flexDirection: 'column'
+  },
   textScreen: {
     color: 'black',
     fontSize: 25,

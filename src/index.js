@@ -19,7 +19,8 @@ import Login from './components/Login'
 import { requestScreen } from './components/request/Request'
 import { MyRequestTab } from './components/request/Tab'
 import { RequestDayDetail } from './components/request/RequestDayDetails';
-import { userDetail} from './components/user/userDetail'
+import { Profile, profile, ProfileSwitcher } from './components/user/Profile'
+import { USER_DETAIL } from './components/Consts'
 
 
 const MyTransitionToDown = {
@@ -79,27 +80,7 @@ const MyTransitionToLeft = {
     }
   },
 }
-const screen2 = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.textScreen}>screen2</Text>
-    </View>
-  )
-}
-const profile = () => {
-  let [logined, setLogined] = useState(false)
-  // useEffect(() => {
-  //   console.log('profile');
-  //   AsyncStorage.getItem('userLogined').then(e => setLogined(e))
-  // })
-  if (!logined) return <Login />
-  else
-    return (
-      <View style={styles.container}>
-        <Text style={styles.textScreen}>screen3</Text>
-      </View>
-    )
-}
+
 const MyTilte = navigation => {
   // console.log(navigation.navigation);
   let [pName, setPname] = useState('')
@@ -125,7 +106,7 @@ const ShiftRequestStack = createStackNavigator(
       screen: MyRequestTab,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
-        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
+        headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -150,7 +131,7 @@ const ShiftRequestStack = createStackNavigator(
       screen: RequestDayDetail,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
-        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
+        headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -169,32 +150,91 @@ const ShiftRequestStack = createStackNavigator(
         ),
       }),
     },
-    userDetail: {
-      screen: userDetail,
-      navigationOptions: ({ navigation }) => ({
-        headerShown: true,
-        headerTitleStyle: {
-          fontFamily: 'IRANSansMobile_Bold',
-        },
-        headerTitle: '',
-        ...MyTransitionToLeft,
-        headerRight: () => (
-          <View style={{ flexDirection: 'row', marginRight: 2 }}>
-            <TouchableOpacity onPress={() => console.log('dsd')}>
-              <Icon
-                name='add-outline'
-                type='Ionicons'
-                style={{ color: 'black', fontSize: 30 }}
-              />
-            </TouchableOpacity>
-          </View>
-        ),
-      }),
-    }
   },
   {
     initialRouteName: 'request',
   },
+)
+const ProfileStack = createStackNavigator({
+  loginSwitcher: {
+    screen: ProfileSwitcher,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: true,
+      headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
+      headerTitleStyle: {
+        fontFamily: 'IRANSansMobile_Bold',
+      },
+      headerTitle: '',
+      ...MyTransitionToLeft,
+      headerRight: () => (
+        <View style={{ flexDirection: 'row', marginRight: 2 }}>
+           <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => {
+            AsyncStorage.removeItem(USER_DETAIL)
+            navigation.navigate('review')
+          }}>
+            <Icon
+              name='ios-power'
+              type='Ionicons'
+              style={{ color: 'black', fontSize: 25 }}
+            />
+          </TouchableOpacity>
+        </View>
+      ),
+    }),
+  },
+  login: {
+    screen: Login,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: true,
+      headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
+      headerTitleStyle: {
+        fontFamily: 'IRANSansMobile_Bold',
+      },
+      headerTitle: '',
+      ...MyTransitionToLeft,
+      headerRight: () => (
+        <View style={{ flexDirection: 'row', marginRight: 2 }}>
+          <TouchableOpacity onPress={() => console.log('dsd')}>
+            <Icon
+              name='add-outline'
+              type='Ionicons'
+              style={{ color: 'black', fontSize: 30 }}
+            />
+          </TouchableOpacity>
+        </View>
+      ),
+    }),
+  },
+  profile: {
+    screen: Profile,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: true,
+      headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
+      headerTitleStyle: {
+        fontFamily: 'IRANSansMobile_Bold',
+      },
+      headerTitle: 'پروفایل',
+      ...MyTransitionToLeft,
+      headerRight: () => (
+        <View style={{ flexDirection: 'row', marginRight: 2 }}>
+          <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => {
+            AsyncStorage.removeItem(USER_DETAIL)
+            navigation.navigate('review')
+          }}>
+            <Icon
+              name='ios-power'
+              type='Ionicons'
+              style={{ color: 'black', fontSize: 25 }}
+            />
+          </TouchableOpacity>
+        </View>
+      ),
+    }),
+  },
+},
+  {
+    initialRouteName: 'loginSwitcher',
+  }
 )
 const ShiftReviewStack = createStackNavigator(
   {
@@ -202,7 +242,7 @@ const ShiftReviewStack = createStackNavigator(
       screen: reviewScreen,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
-        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
+        headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -227,7 +267,7 @@ const ShiftReviewStack = createStackNavigator(
       screen: DayDetail,
       navigationOptions: ({ navigation }) => ({
         headerShown: true,
-        headerStyle:{backgroundColor:'#12c2e9',borderBottomColor:'#c471ed',borderBottomWidth:2},
+        headerStyle: { backgroundColor: '#12c2e9', borderBottomColor: '#c471ed', borderBottomWidth: 2 },
         headerTitleStyle: {
           fontFamily: 'IRANSansMobile_Bold',
         },
@@ -246,9 +286,7 @@ const ShiftReviewStack = createStackNavigator(
         ),
       }),
     },
-    login: {
-      screen: Login,
-    },
+
   },
   {
     initialRouteName: 'review',
@@ -264,7 +302,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
             style={{
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
-              fontWeight:'bold',
+              fontWeight: 'bold',
               fontSize: 12,
             }}>
             درخواست ها
@@ -294,7 +332,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
               fontSize: 12,
-              fontWeight:'bold',
+              fontWeight: 'bold',
             }}>
             شیف من
           </Text>
@@ -313,7 +351,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       },
     },
     profileStack: {
-      screen: profile,
+      screen: ProfileStack,
       navigationOptions: {
         tabBarLabel: (
           <Text
@@ -321,7 +359,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
               fontFamily: 'IRANSansMobile',
               textAlign: 'center',
               fontSize: 12,
-              fontWeight:'bold',
+              fontWeight: 'bold',
             }}>
             پروفایل
           </Text>
